@@ -13,10 +13,33 @@ struct ContentView: View {
             HeaderView()
             HStack {
                 PricingView(title: "Basic", price: "$9", textColor: .white, bgColor: .purple)
-                PricingView(title: "Pro", price: "$19", textColor: .black, bgColor: Color(red: 240/255, green: 240/255, blue: 240/255))
+                ZStack {
+                    PricingView(title: "Pro", price: "$19", textColor: .black, bgColor: Color(red: 240/255, green: 240/255, blue: 240/255))
+                    Text("Best for designer")
+                        .font(.system(.caption, design: .rounded))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(Color(red: 255/255, green: 183/255, blue: 37/255))
+                        .offset(x: 0, y: 80)
+                }
             }
+            .padding(.horizontal)
+            
+            ZStack {
+                PricingView(title: "Team", price: "$299", textColor: .white, bgColor: Color(red: 62/255, green: 63/255, blue: 70/255), icon: "wand.and.rays")
+                    .padding()
+                
+                Text("Perfect for teams with 20 members")
+                    .font(.system(.caption, design: .rounded))
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(5)
+                    .background(Color(red: 255/255, green: 183/255, blue: 37/255))
+                    .offset(x: 0, y: 87)
+            }
+                Spacer()
         }
-        .padding(.horizontal)
     }
 }
 
@@ -45,9 +68,17 @@ struct PricingView: View {
     var price: String
     var textColor: Color
     var bgColor: Color
+    var icon: String?
     
     var body: some View {
         VStack {
+            
+            icon.map({
+                Image(systemName: $0)
+                    .font(.largeTitle)
+                    .foregroundColor(textColor)
+            })
+            
             Text(title)
                 .font(.system(.title, design: .rounded))
                 .fontWeight(.black)
@@ -59,9 +90,9 @@ struct PricingView: View {
                 .font(.headline)
                 .foregroundColor(textColor)
         }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
         .padding(40)
         .background(bgColor)
         .cornerRadius(20)
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
     }
 }
